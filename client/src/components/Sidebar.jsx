@@ -1,17 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, Link } from 'react-router-dom'
-import {
-  Calendar,
-  DollarSign,
-  FileText,
-  LayoutGrid,
-  Menu,
-  Settings,
-  User,
-  X,
-  ChevronRight,
-  LogOut
-} from 'lucide-react'
+import { Calendar, DollarSign, FileText, LayoutGrid, Menu, Settings, User, X, ChevronRight, LogOut } from 'lucide-react'
 import { dummyProfileData } from '../assets/assets'
 
 const Sidebar = () => {
@@ -34,9 +23,9 @@ const Sidebar = () => {
 
   const navItems = [
     { name: "Dashboard", href: "/dashboard", icon: LayoutGrid },
-    role === "ADMIN"
-      ? { name: "Employees", href: "/employees", icon: User }
-      : { name: "Attendance", href: "/attendance", icon: Calendar },
+    role === "ADMIN" ? 
+    { name: "Employees", href: "/employees", icon: User } :
+    { name: "Attendance", href: "/attendance", icon: Calendar },
     { name: "Leave", href: "/leave", icon: FileText },
     { name: "Payslips", href: "/payslips", icon: DollarSign },
     { name: "Settings", href: "/settings", icon: Settings }
@@ -65,7 +54,7 @@ const Sidebar = () => {
       )}
 
       {/* Desktop Sidebar */}
-      <aside className="hidden lg:flex flex-col h-screen w-[260px] bg-gradient-to-b from-slate-900 to-slate-950 text-white">
+      <aside className="hidden lg:flex flex-col h-screen w-65 bg-linear-to-b from-slate-900 to-slate-950 text-white">
 
         {/* Header */}
         <div className="px-5 pt-6 pb-5 border-b border-white/10">
@@ -127,7 +116,7 @@ const Sidebar = () => {
                 }`}
               >
                 {isActive && (
-                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-indigo-500 rounded-r-full" />
+                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-0.75 h-5 bg-indigo-500 rounded-r-full" />
                 )}
 
                 <Icon
@@ -163,7 +152,7 @@ const Sidebar = () => {
 
       {/* Mobile Sidebar */}
       <aside
-        className={`lg:hidden fixed inset-y-0 left-0 w-72 bg-gradient-to-b from-slate-900 to-slate-950 text-white z-50 flex flex-col transform transition-transform duration-300 ${
+        className={`lg:hidden fixed inset-y-0 left-0 w-72 bg-linear-to-b from-slate-900 to-slate-950 text-white z-50 flex flex-col transform transition-transform duration-300 ${
           mobileOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
