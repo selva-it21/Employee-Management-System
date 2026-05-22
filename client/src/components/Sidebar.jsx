@@ -19,7 +19,7 @@ const Sidebar = () => {
     setMobileOpen(false)
   }, [pathname])
 
-  const role = "EMPLOYEE"
+  const role = "ADMIN" || "EMPLOYEE"
 
   const navItems = [
     { name: "Dashboard", href: "/dashboard", icon: LayoutGrid },
@@ -38,10 +38,7 @@ const Sidebar = () => {
   return (
     <>
       {/* Mobile button */}
-      <button
-        onClick={() => setMobileOpen(true)}
-        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-slate-900 text-white rounded-lg"
-      >
+      <button onClick={() => setMobileOpen(true)} className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-slate-900 text-white rounded-lg" >
         <Menu size={20} />
       </button>
 
@@ -106,15 +103,12 @@ const Sidebar = () => {
             const Icon = item.icon
 
             return (
-              <Link
-                key={item.name}
-                to={item.href}
-                className={`group flex items-center gap-3 px-3 py-2.5 rounded-md text-[13px] transition-all relative ${
+              <Link key={item.name} to={item.href} className={`group flex items-center gap-3 px-3 py-2.5 
+                rounded-md text-[13px] transition-all relative ${
                   isActive
                     ? "bg-indigo-500/20 text-indigo-300"
                     : "text-slate-300 hover:text-white hover:bg-white/5"
-                }`}
-              >
+                }`}>
                 {isActive && (
                   <div className="absolute left-0 top-1/2 -translate-y-1/2 w-0.75 h-5 bg-indigo-500 rounded-r-full" />
                 )}
@@ -141,8 +135,8 @@ const Sidebar = () => {
         <div className="p-3 border-t border-white/10">
           <button
             onClick={handleLogout}
-            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-md text-[13px] text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 transition"
-          >
+            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-md text-[13px] text-slate-400 
+            hover:text-rose-400 hover:bg-rose-500/10 transition">
             <LogOut className="w-4 h-4" />
             <span>Log out</span>
           </button>
@@ -152,16 +146,15 @@ const Sidebar = () => {
 
       {/* Mobile Sidebar */}
       <aside
-        className={`lg:hidden fixed inset-y-0 left-0 w-72 bg-linear-to-b from-slate-900 to-slate-950 text-white z-50 flex flex-col transform transition-transform duration-300 ${
+        className={`lg:hidden fixed inset-y-0 left-0 w-72 bg-linear-to-b from-slate-900 to-slate-950 
+          text-white z-50 flex flex-col transform transition-transform duration-300 ${
           mobileOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
-      >
+        }`}>
 
         {/* Close button */}
         <button
           onClick={() => setMobileOpen(false)}
-          className="p-4 text-slate-400"
-        >
+          className="p-4 text-slate-400">
           <X />
         </button>
 
@@ -172,13 +165,9 @@ const Sidebar = () => {
             const Icon = item.icon
 
             return (
-              <Link
-                key={item.name}
-                to={item.href}
-                className={`flex items-center gap-3 px-4 py-3 ${
+              <Link key={item.name} to={item.href} className={`flex items-center gap-3 px-4 py-3 ${
                   isActive ? "text-indigo-300" : "text-slate-300"
-                }`}
-              >
+                }`}>
                 <Icon className="w-4 h-4" />
                 {item.name}
               </Link>

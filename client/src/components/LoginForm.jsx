@@ -47,13 +47,8 @@ const LoginForm = ({ role, title, subtitle }) => {
               <label className="block text-sm font-medium text-slate-700 mb-2">
                 Email address
               </label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                placeholder="johndoe@example.com"
-                className="w-full border rounded-lg p-3"
+              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required 
+              placeholder="johndoe@example.com" className="w-full border rounded-lg p-3"
               />
             </div>
 
@@ -63,13 +58,9 @@ const LoginForm = ({ role, title, subtitle }) => {
               </label>
 
               <div className="relative">
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  placeholder="********"
-                  className="w-full border rounded-lg p-3 pr-10"
+                <input type={showPassword ? 'text' : 'password'} value={password} 
+                onChange={(e) => setPassword(e.target.value)} required placeholder="********" 
+                className="w-full border rounded-lg p-3 pr-10"
                 />
 
                 <button
@@ -82,20 +73,17 @@ const LoginForm = ({ role, title, subtitle }) => {
               </div>
             </div>
             <button type='submit'
-            disabled={loading}
-            className="w-full py-3 bg-linear-to-r from-indigo-600
-            to-indigo-500 text-white rounded-md text-sm font-semibold
-            hover:from-indigo-700 hover:to-indigo-600 disabled:opacity-50 
-            transition-all duration-200 shadow-lg shadow-indigo-500/25 active:scale-[0.98] flex items-center justify-center"
-            >
+              disabled={loading}
+              className="w-full py-3 bg-linear-to-r from-indigo-600 to-indigo-500 text-white rounded-md 
+              text-sm font-semibold hover:from-indigo-700 hover:to-indigo-600 disabled:opacity-50  transition-all duration-200 shadow-lg shadow-indigo-500/25 active:scale-[0.98] flex items-center justify-center"
+              >
                 {loading && <Loader2Icon className='animate-spin h-4 w-4 mr-2'/>}
                 Sign in
             </button>
           </form>
-
+          
         </div>
       </div>
-
     </div>
   )
 }
