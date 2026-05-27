@@ -39,7 +39,7 @@ const AdminDashboard = ({data}) => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:grid-cols-4 gap-4 sm:gap-5 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:grid-cols-4 sm:gap-5 mb-8">
         {stats.map((s) => (
             <div key={s.label} className="card card-hover p-5 sm:p-6 relative overflow-hidden group flex items-center justify-between">
             <div>
