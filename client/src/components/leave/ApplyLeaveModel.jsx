@@ -46,9 +46,9 @@ const ApplyLeaveModel = ({open, onClose, onSuccess}) => {
                     <label className='flex items-center gap-2 text-sm font-medium text-slate-700 mb-2'>
                         <CalendarDays className='w-4 h-4 text-slate-400'/> Duration
                     </label>
-                    <div className='grid grid-cols-2'>
+                    <div className='grid grid-cols-2 gap-3'>
                         <div>
-                            <span className='block text-xs text-slate-400'>From</span>
+                            <span className='block text-xs text-slate-400 '>From</span>
                             <input type="date" name='startDate' min={minDate} required />
                         </div>
                         <div>
