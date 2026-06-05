@@ -1,10 +1,10 @@
-//Get employees
-// GET / api/employees
-
 import { response } from "express";
 import Employee from "../models/Employee.js";
 import bcrypt from "bcrypt"
 import User from "../models/User.js";
+//Get employees
+// GET / api/employees
+
 
 export const getEmployees = async (req, res) => {
     try {
@@ -125,7 +125,6 @@ export const deleteEmployees = async (req, res) => {
         employee.employmentStatus = "INACTIVE"
         await employee.save()
         return res.json({ success: true })
-        const employee
     } catch (error) {
         return res.status(500).json({ error: "Failed to deleted employee" });
     }
