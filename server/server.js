@@ -17,7 +17,7 @@ app.use(express.json())
 app.use(multer().none())
 
 //routes
-app.get("/",(req,res)=> res.send("Server is running"))
+app.get("/", (req, res) => res.send("Server is running"))
 app.use("/api/auth", authRouter)
 app.use("/api/auth", employeesRouter)
 app.use("api/profile", profileRouter)
@@ -25,4 +25,4 @@ app.use("api/attendance", attendanceRouter)
 
 await connectDB()
 
-app.listen(PORT, ()=> console.log(`server running on port ${PORT}`))
+app.listen(PORT, () => console.log(`server running on port ${PORT}`))
