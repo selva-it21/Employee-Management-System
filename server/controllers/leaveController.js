@@ -45,7 +45,7 @@ export const createLeave = async (req, res) => {
 // get leave
 // GET /api/leaves
 
-export const getLeave = async (req, res) => {
+export const getLeaves = async (req, res) => {
     try {
         const session = req.session;
         isAdmin = session.role === "ADMIN";
