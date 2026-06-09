@@ -28,6 +28,14 @@ export const clockInOut = async (req, res) => {
                 checkIn: now,
                 status: isLate ? "LATE" : "PRESENT"
             })
+
+            await inngest.send({
+                name: "employee-check-out",
+                data: {
+                    employeeId: employee._id,
+                    attendanceId: attendance._id,
+                }
+            })
             return res.json({ success: true, typr: "CHECK_IN", data: attendance });
         }
         else if (!existing.checkOut) {

@@ -1,6 +1,7 @@
 // Create leave
 // POST /api/leaves
 
+import { inngest } from "../inngest/index.js";
 import Employee from "../models/Employee.js";
 import LeaveApplication from "../models/LeaveApplication.js";
 import employeesRouter from "../routes/employeeRoutes.js";
@@ -35,7 +36,12 @@ export const createLeave = async (req, res) => {
             reason,
             status: "PENDING",
         })
-
+        await inngest.send({
+            name: "leave/pending",
+            data: {
+                leaveApplicationId: leave._id,
+            }
+        })
         return res.json({ success: true, date: leave });
     } catch (error) {
         return res.status(500).json({ error: "Failed" });
@@ -45,7 +51,7 @@ export const createLeave = async (req, res) => {
 // get leave
 // GET /api/leaves
 
-export const getLeave = async (req, res) => {
+export const getLeaves = async (req, res) => {
     try {
         const session = req.session;
         isAdmin = session.role === "ADMIN";
