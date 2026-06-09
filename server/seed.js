@@ -39,8 +39,7 @@ async function registerAdmin() {
         process.exit(0);
         
     } catch (error) {
-        console.error("Seed failed", error);
-        
+        console.error("Seed failed", error); 
     }
 }
 
