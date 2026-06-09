@@ -2,7 +2,7 @@
 // POST /api/payslips
 
 import Employee from "../models/Employee.js";
-import Payslip from "../models/PaySlip.js";
+import Payslip from "../models/Payslip.js";
 
 export const createPayslip = async (req, res) => {
     try {
