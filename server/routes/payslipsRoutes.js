@@ -4,7 +4,7 @@ import { createPayslip, getPayslipById, getPayslips } from "../controllers/paysl
 
 
 const payslipRouter = Router()
-payslipRouter.post("/", protect, protectAdmin, createPayslip)
+payslipRouter.get("/", protect, protectAdmin, getPayslips)
 payslipRouter.post("/", protect, protectAdmin, createPayslip)
 payslipRouter.get("/:id", protect, getPayslipById)
 
