@@ -36,7 +36,7 @@ export const clockInOut = async (req, res) => {
                     attendanceId: attendance._id,
                 }
             })
-            return res.json({ success: true, typr: "CHECK_IN", data: attendance });
+            return res.json({ success: true, type: "CHECK_IN", data: attendance });
         }
         else if (!existing.checkOut) {
             const checkInTime = new Date(existing.checkIn).getTime()
@@ -46,6 +46,8 @@ export const clockInOut = async (req, res) => {
             existing.checkOut = now;
 
             //compute working hours and daytype
+            //    dayType: { type: String, enum: ["Full Day", "Three Quarter Day", "Half Day", "Short Day", null], default: null },
+
             const workingHours = parseFloat(diffHours.toFixed(2))
             let dayType = "Half Day";
             if (workingHours >= 8) dayType = "Full Day";
