@@ -26,7 +26,7 @@ export const createPayslip = async (req, res) => {
 
         return res.json({ success: true, data: payslip })
     } catch (error) {
-        return res.status(500).json({ error: "Failed" })
+        return res.status(500).json({ error: "Failed to create payslip" })
     }
 }
 // get payslip
@@ -36,6 +36,8 @@ export const getPayslips = async (req, res) => {
     try {
         const session = req.session;
         const isAdmin = session.role === "ADMIN";
+        // console.log(session);
+        
         if (isAdmin) {
             const payslips = await Payslip.find().populate("employeeId").sort({ createdAt: -1 });
             const data = payslips.map((p) => {
@@ -51,12 +53,12 @@ export const getPayslips = async (req, res) => {
         } else {
             const employee = await Employee.findOne({ userId: session.userId })
             if (!employee) return res.status(404).json({ error: "Not found" });
-            const payslips = (await Payslip.find({ employeeId: employee._id })).toSorted({ createdAt: -1 });
+            const payslips = await Payslip.find({ employeeId: employee._id }).sort({ createdAt: -1 });
             return res.json({ data: payslips })
         }
 
     } catch (error) {
-        return res.status(500).json({ error: "Failed" })
+        return res.status(500).json({ error: "Failed to get payslip" })
 
     }
 }
@@ -75,6 +77,6 @@ export const getPayslipById = async (req, res) => {
         }
         return res.json(result)
     } catch (error) {
-        return res.status(500).json({ error: "Failed" })
+        return res.status(500).json({ error: "Failed to update payslip" })
     }
 }

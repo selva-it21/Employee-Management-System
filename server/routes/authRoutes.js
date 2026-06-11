@@ -6,6 +6,6 @@ const authRouter = Router();
 
 authRouter.post("/login", login)
 authRouter.get("/session", protect, session)
-authRouter.post("/change-password", protect, changepassword)
+authRouter.post("/changepassword", protect, changepassword)
 
 export default authRouter
