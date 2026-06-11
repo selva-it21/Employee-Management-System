@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, Link } from 'react-router-dom'
-import { Calendar, DollarSign, FileText, LayoutGrid, Menu, Settings, User, X, ChevronRight, LogOut } from 'lucide-react'
+import { Calendar, DollarSign, FileText, LayoutGrid, Menu, Settings, User, X, ChevronRight, LogOut, Loader2 } from 'lucide-react'
 import { dummyProfileData } from '../assets/assets'
+import { useAuth } from '../context/AuthContext'
+import api from '../api/axios'
 
 const Sidebar = () => {
 
@@ -9,29 +11,36 @@ const Sidebar = () => {
   const [userName, setUserName] = useState('')
   const [mobileOpen, setMobileOpen] = useState(false)
 
+  const { user, loading, logout } = useAuth()
   useEffect(() => {
-    setUserName(
-      dummyProfileData.firstName + " " + dummyProfileData.lastName
-    )
-  }, [])
+    const fetchProfile = async () => {
+      const { data } = await api.get("/profile");
+      if (data.firstName) {
+        setUserName(`${data.firstName} ${data.lastName || ""}`.trim());
+      }
+    };
+
+    fetchProfile();
+  }, []);
 
   useEffect(() => {
     setMobileOpen(false)
   }, [pathname])
 
-  const role = "" || "EMPLOYEE"
+  const role = user?.role
 
   const navItems = [
     { name: "Dashboard", href: "/dashboard", icon: LayoutGrid },
-    role === "ADMIN" ? 
-    { name: "Employees", href: "/employees", icon: User } :
-    { name: "Attendance", href: "/attendance", icon: Calendar },
+    role === "ADMIN" ?
+      { name: "Employees", href: "/employees", icon: User } :
+      { name: "Attendance", href: "/attendance", icon: Calendar },
     { name: "Leave", href: "/leave", icon: FileText },
     { name: "Payslips", href: "/payslips", icon: DollarSign },
     { name: "Settings", href: "/settings", icon: Settings }
   ]
 
   const handleLogout = () => {
+    logout()
     window.location.href = "/login"
   }
 
@@ -76,7 +85,9 @@ const Sidebar = () => {
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-lg bg-slate-800 flex items-center justify-center">
                 <span className="text-xs text-white font-semibold">
-                  {userName.charAt(0).toUpperCase()}
+                  {/* {userName.charAt(0).toUpperCase()} */}
+                  {userName?.[0]?.toUpperCase()}
+
                 </span>
               </div>
               <div>
@@ -97,38 +108,44 @@ const Sidebar = () => {
         </div>
 
         {/* Nav Items */}
-        <div className="flex-1 px-3 space-y-1 overflow-y-auto">
-          {navItems.map((item) => {
-            const isActive = pathname.startsWith(item.href)
-            const Icon = item.icon
+        <div className="flex-1 px-3 space-y-0.5 overflow-y-auto">
+          {loading ? (
+            <div className='px-3 py-3 flex items-center gap-2 text-slate-500'>
+              <Loader2 className='animate-spin w-4 h-4' />
+              <span className='text-sm'>Loading...</span>
+            </div>
+          ) : (
+            navItems.map((item) => {
+              const isActive = pathname.startsWith(item.href)
+              const Icon = item.icon
 
-            return (
-              <Link key={item.name} to={item.href} className={`group flex items-center gap-3 px-3 py-2.5 
-                rounded-md text-[13px] transition-all relative ${
-                  isActive
+              return (
+                <Link key={item.name} to={item.href} className={`group flex items-center gap-3 px-3 py-2.5 
+                  rounded-md text-[13px] transition-all relative ${isActive
                     ? "bg-indigo-500/20 text-indigo-300"
                     : "text-slate-300 hover:text-white hover:bg-white/5"
-                }`}>
-                {isActive && (
-                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-0.75 h-5 bg-indigo-500 rounded-r-full" />
-                )}
+                  }`}>
+                  {isActive && (
+                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-0.75 h-5 bg-indigo-500 rounded-r-full" />
+                  )}
 
-                <Icon
-                  className={`w-4 h-4 ${
-                    isActive
+                  <Icon
+                    className={`w-4 h-4 ${isActive
                       ? "text-indigo-300"
                       : "text-slate-400 group-hover:text-white"
-                  }`}
-                />
+                      }`}
+                  />
 
-                <span className="flex-1">{item.name}</span>
+                  <span className="flex-1">{item.name}</span>
 
-                {isActive && (
-                  <ChevronRight className="w-4 h-4 text-indigo-400" />
-                )}
-              </Link>
-            )
-          })}
+                  {isActive && (
+                    <ChevronRight className="w-4 h-4 text-indigo-400" />
+                  )}
+                </Link>
+              )
+            })
+
+          )}
         </div>
 
         {/* Logout */}
@@ -147,9 +164,8 @@ const Sidebar = () => {
       {/* Mobile Sidebar */}
       <aside
         className={`lg:hidden fixed inset-y-0 left-0 w-72 bg-linear-to-b from-slate-900 to-slate-950 
-          text-white z-50 flex flex-col transform transition-transform duration-300 ${
-          mobileOpen ? "translate-x-0" : "-translate-x-full"
-        }`}>
+          text-white z-50 flex flex-col transform transition-transform duration-300 ${mobileOpen ? "translate-x-0" : "-translate-x-full"
+          }`}>
 
         {/* Close button */}
         <button
@@ -165,8 +181,7 @@ const Sidebar = () => {
             const Icon = item.icon
 
             return (
-              <Link key={item.name} to={item.href} className={`flex items-center gap-3 px-4 py-3 ${
-                  isActive ? "text-indigo-300" : "text-slate-300"
+              <Link key={item.name} to={item.href} className={`flex items-center gap-3 px-4 py-3 ${isActive ? "text-indigo-300" : "text-slate-300"
                 }`}>
                 <Icon className="w-4 h-4" />
                 {item.name}

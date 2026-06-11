@@ -1,6 +1,7 @@
 // Create leave
 // POST /api/leaves
 
+import { err } from "inngest/types";
 import { inngest } from "../inngest/index.js";
 import Employee from "../models/Employee.js";
 import LeaveApplication from "../models/LeaveApplication.js";
@@ -31,6 +32,7 @@ export const createLeave = async (req, res) => {
 
         const leave = await LeaveApplication.create({
             employeeId: employee._id,
+            type,
             startDate: new Date(startDate),
             endDate: new Date(endDate),
             reason,
@@ -44,7 +46,7 @@ export const createLeave = async (req, res) => {
         })
         return res.json({ success: true, date: leave });
     } catch (error) {
-        return res.status(500).json({ error: "Failed" });
+        return res.status(500).json({ error: "Failed to create leave" });
     }
 }
 
@@ -52,9 +54,11 @@ export const createLeave = async (req, res) => {
 // GET /api/leaves
 
 export const getLeaves = async (req, res) => {
+    // console.log(req.session);
+    
     try {
         const session = req.session;
-        isAdmin = session.role === "ADMIN";
+        const isAdmin = session.role === "ADMIN";
         if (isAdmin) {
             const status = req.query.status;
             const where = status ? { status } : {};
@@ -82,7 +86,8 @@ export const getLeaves = async (req, res) => {
             })
         }
     } catch (error) {
-        return res.status(500).json({ error: "Failed" });
+        console.error(error);
+        return res.status(500).json({ error: "Failed to get Leave data" });
     }
 }
 
@@ -94,10 +99,10 @@ export const updateLeaveStatus = async (req, res) => {
         const { status } = req.body;
         if (!["APPROVED", "REJECTED", "PENDING"].includes(status)) {
             return res.status(400).json({ error: "Invalid status" });
-            const leave = await LeaveApplication.findByIdAndUpdate(req.params.id, { status }, { returnDocument: "after" })
-            return res.json({ success: true, data: leave })
         }
+        const leave = await LeaveApplication.findByIdAndUpdate(req.params.id, { status }, { returnDocument: "after" })
+        return res.json({ success: true, data: leave })
     } catch (error) {
-        return res.status(500).json({ error: "Failed" });
+        return res.status(500).json({ error: "Failed to update data" });
     }
 }

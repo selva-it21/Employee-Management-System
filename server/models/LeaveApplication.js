@@ -1,7 +1,7 @@
 import mongoose, { modelNames, mongo } from "mongoose";
 
 const leaveApplicationScheme = new mongoose.Schema({
-    employeeId: { type: mongoose.Schema.Types.ObjectId, ref: " EMployee", required: true },
+    employeeId: { type: mongoose.Schema.Types.ObjectId, ref: "Employee", required: true },
     type: { type: String, enum: ["SICK", "CASUAL", "ANNUAL"], required: true },
     startDate: { type: Date, required: true },
     endDate: { type: Date, required: true },

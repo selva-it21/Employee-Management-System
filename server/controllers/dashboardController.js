@@ -32,7 +32,7 @@ export const getDashboard = async (req, res) => {
         } else {
             const employee = await Employee.findOne({
                 userId: session.userId,
-            }).leane();
+            }).lean();
 
             if (!employee) return res.status(404).json({ error: "Employee not found." });
 
